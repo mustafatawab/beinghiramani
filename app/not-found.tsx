@@ -1,0 +1,2 @@
+import Link from "next/link"
+export default function NotFound() { return <main className="flex min-h-screen flex-col items-center justify-center px-6 text-center"><p className="text-sm uppercase tracking-[0.3em] text-primary">Hira Mani Couture</p><h1 className="mt-4 font-serif text-6xl">This piece is not here</h1><Link href="/" className="mt-8 rounded-full bg-primary px-8 py-4 text-primary-foreground">Return home</Link></main> }
