@@ -4,7 +4,7 @@ import { brandStatement } from "@/lib/data/site"
 
 export function FeatureSection() {
   return (
-    <section className="bg-background py-20 lg:py-28">
+    <section id="brand-story" className="scroll-mt-20 bg-background py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20 lg:px-8">
         <div className="relative mx-auto w-full max-w-md pb-12 lg:max-w-none lg:pb-16">
           <div className="aspect-[4/5] overflow-hidden rounded-[2rem]">

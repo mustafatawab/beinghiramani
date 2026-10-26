@@ -4,7 +4,11 @@ import { celebrityImages, site } from "@/lib/data/site"
 
 export function Celebs() {
   return (
-    <section className="overflow-hidden bg-card py-20" aria-labelledby="celebs-heading">
+    <section
+      id="celebrities"
+      className="scroll-mt-20 overflow-hidden bg-card py-20"
+      aria-labelledby="celebs-heading"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-10 flex flex-col items-center gap-4 text-center">
           <span className="text-[11px] uppercase tracking-[0.3em] text-primary">Follow along</span>

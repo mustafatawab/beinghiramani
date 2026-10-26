@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { DM_Sans, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { CartProvider } from "@/components/boty/cart-context"
+import { ConciergeLauncher } from "@/components/boty/concierge-launcher"
 import { site } from "@/lib/data/site"
 import "./globals.css"
 
@@ -46,7 +47,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${playfair.variable} font-sans antialiased`}>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <ConciergeLauncher />
+        </CartProvider>
         <Analytics />
       </body>
     </html>

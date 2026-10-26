@@ -16,7 +16,7 @@ export function Newsletter() {
   }
 
   return (
-    <section className="bg-[#2e2926] py-20 text-[#f7f4ef]">
+    <section id="newsletter" className="scroll-mt-20 bg-[#2e2926] py-20 text-[#f7f4ef]">
       <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
         <span className="text-[11px] uppercase tracking-[0.3em] text-[#f7f4ef]/60">Stay close</span>
         <h2 className="mt-4 font-serif text-4xl leading-tight md:text-6xl">{newsletter.heading}</h2>
