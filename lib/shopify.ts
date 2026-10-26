@@ -21,7 +21,7 @@ export {
 }
 
 export function getCollections() {
-  return collections
+  return collections.filter((collection) => collection.handle !== "all")
 }
 
 export function getHomepageContent() {

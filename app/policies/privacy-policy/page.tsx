@@ -2,7 +2,7 @@ import { PolicyPage } from "@/components/boty/policy-page"
 import { privacyPolicy } from "@/lib/data/policies"
 
 export const metadata = {
-  title: "Privacy Policy | Hira Mani Couture",
+  title: "Privacy Policy",
   description: "How Hira Mani Couture collects, uses and discloses your personal information.",
 }
 

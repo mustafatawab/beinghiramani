@@ -5,7 +5,7 @@ import { Footer } from "@/components/boty/footer"
 import { site } from "@/lib/data/site"
 
 export const metadata = {
-  title: "My Account | Hira Mani Couture",
+  title: "My Account",
   description: "Order updates and customer care for Hira Mani Couture.",
 }
 

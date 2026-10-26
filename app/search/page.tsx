@@ -3,7 +3,7 @@ import { Footer } from "@/components/boty/footer"
 import { SearchClient } from "@/components/boty/search-client"
 
 export const metadata = {
-  title: "Search | Hira Mani Couture",
+  title: "Search",
   description: "Search Hira Mani Couture by name, fabric or collection.",
 }
 

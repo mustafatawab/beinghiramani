@@ -7,7 +7,7 @@ import { featuredProducts } from "@/lib/data/products"
 import { site } from "@/lib/data/site"
 
 export const metadata = {
-  title: "Wishlist | Hira Mani Couture",
+  title: "Wishlist",
   description: "Hira's favourite pieces from the Nau Bahar collection.",
 }
 

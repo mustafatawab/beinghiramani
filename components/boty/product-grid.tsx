@@ -11,9 +11,14 @@ export function ProductGrid() {
             <span className="mb-3 block text-[11px] uppercase tracking-[0.3em] text-primary">Hira&apos;s edit</span>
             <h2 className="font-serif text-4xl md:text-5xl">Shop Hira&apos;s Favorites</h2>
           </div>
-          <Link href="/collections/all" className="text-sm underline underline-offset-8">
-            View all pieces
-          </Link>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <Link href="/collections" className="text-sm underline underline-offset-8">
+              All collections
+            </Link>
+            <Link href="/collections/all" className="text-sm underline underline-offset-8">
+              View all pieces
+            </Link>
+          </div>
         </div>
 
         <div className="mb-8 flex flex-wrap gap-6 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">

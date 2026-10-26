@@ -5,7 +5,7 @@ import { Footer } from "@/components/boty/footer"
 import { about, site, type AboutParagraph } from "@/lib/data/site"
 
 export const metadata = {
-  title: "About Hira Mani Couture",
+  title: "About",
   description:
     "I am Hira Mani, and this brand is the most personal thing I have ever created. Read the story behind Hira Mani Couture.",
 }

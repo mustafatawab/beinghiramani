@@ -2,7 +2,7 @@ import { PolicyPage } from "@/components/boty/policy-page"
 import { termsPolicy } from "@/lib/data/policies"
 
 export const metadata = {
-  title: "Terms of Service | Hira Mani Couture",
+  title: "Terms of Service",
   description: "The terms of service for shopping with Hira Mani Couture.",
 }
 

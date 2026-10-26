@@ -5,7 +5,7 @@ import { ProductCard } from "@/components/boty/product-card"
 import { getCollection, getCollectionProducts, products } from "@/lib/shopify"
 
 export const metadata = {
-  title: "Shop | Hira Mani Couture",
+  title: "Shop",
   description: "Explore the Nau Bahar and Afsanay 2025 collections by Hira Mani Couture.",
 }
 
@@ -15,6 +15,9 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
   const title = collection?.title ?? "Shop Hira's Favorites"
   const description =
     collection?.description ?? "Every piece from Hira Mani Couture, handcrafted and carefully curated."
+
+  const isFlagshipCollection =
+    !collectionHandle || ["all", "nau-bahar", "afsanay-2025"].includes(collectionHandle)
 
   const tabs = [
     { label: "All", href: "/collections/all", active: collectionHandle === "all" || !collectionHandle },
@@ -30,6 +33,8 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
         <div className="mx-auto max-w-7xl">
           <nav aria-label="Breadcrumb" className="mb-9 text-xs uppercase tracking-[0.16em] text-muted-foreground">
             <Link href="/" className="hover:text-foreground">Home</Link>
+            <span className="mx-2">/</span>
+            <Link href="/collections" className="hover:text-foreground">Collections</Link>
             <span className="mx-2">/</span>
             <span className="text-foreground">{title}</span>
           </nav>
@@ -47,25 +52,44 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
             </p>
           </div>
 
-          <div className="mt-9 flex flex-wrap gap-6 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">
-            {tabs.map((tab) => (
-              <Link
-                key={tab.href}
-                href={tab.href}
-                aria-current={tab.active ? "page" : undefined}
-                className={
-                  tab.active
-                    ? "border-b-2 border-foreground pb-4"
-                    : "pb-4 text-muted-foreground hover:text-foreground"
-                }
-              >
-                {tab.label}
+          {isFlagshipCollection ? (
+            <div className="mt-9 flex flex-wrap gap-6 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">
+              {tabs.map((tab) => (
+                <Link
+                  key={tab.href}
+                  href={tab.href}
+                  aria-current={tab.active ? "page" : undefined}
+                  className={
+                    tab.active
+                      ? "border-b-2 border-foreground pb-4"
+                      : "pb-4 text-muted-foreground hover:text-foreground"
+                  }
+                >
+                  {tab.label}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-9 flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">
+              <Link href="/collections" className="text-muted-foreground hover:text-foreground">
+                ← All collections
               </Link>
-            ))}
-          </div>
+              <Link href="/collections/all" className="text-muted-foreground hover:text-foreground">
+                View all pieces
+              </Link>
+            </div>
+          )}
 
           {list.length > 0 ? (
-            <div className="mt-10 grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div
+              className={
+                list.length === 1
+                  ? "mx-auto mt-10 grid max-w-md grid-cols-1 gap-y-12"
+                  : list.length === 2
+                    ? "mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2"
+                    : "mt-10 grid gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              }
+            >
               {list.map((product, index) => (
                 <ProductCard key={product.id} product={product} priority={index < 4} />
               ))}

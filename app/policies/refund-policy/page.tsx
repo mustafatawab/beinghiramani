@@ -2,7 +2,7 @@ import { PolicyPage } from "@/components/boty/policy-page"
 import { refundPolicy } from "@/lib/data/policies"
 
 export const metadata = {
-  title: "Refund Policy | Hira Mani Couture",
+  title: "Refund Policy",
   description: "Hira Mani Couture's 30-day return and refund policy.",
 }
 

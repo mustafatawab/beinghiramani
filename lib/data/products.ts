@@ -34,6 +34,7 @@ export type Collection = {
   handle: string
   title: string
   description: string
+  image?: string
   products: Product[]
 }
 
@@ -680,6 +681,8 @@ export const products: Product[] = [
 
 const nauBaharOrder = ["sunheri", "shabnam", "punkhari", "koyil", "gulnaar"]
 
+const newArrivalsOrder = ["gulnaar", "koyil", "punkhari", "shabnam", "sunheri"]
+
 const afsanayOrder = ["raha", "sohaye", "inzar", "izel", "kiara", "amelia-1", "alara"]
 
 
@@ -687,22 +690,99 @@ function sortByHandles(list: Product[], handles: string[]) {
   return handles.map((handle) => list.find((product) => product.handle === handle)).filter(Boolean) as Product[]
 }
 
+const collectionCdn = "https://beinghiramani.com/cdn/shop/files"
+
+function oneProduct(handle: string) {
+  return sortByHandles(products, [handle])
+}
+
 export const collections: Collection[] = [
+  {
+    handle: "afsanay-2025",
+    title: "Afsanay 2025",
+    description: "Bridal wear for your most important day — hand-embellished couture, made to order.",
+    image: `${collectionCdn}/ConvertOut-Resized-051A4947.jpg?v=1759700162&width=1200`,
+    products: sortByHandles(products, afsanayOrder),
+  },
+  {
+    handle: "alara",
+    title: "Alara",
+    description:
+      "Silver zari, sequins and lilac-thread florals on Khadi Net — a bridal ensemble finished with hand-embellished sitara work.",
+    image: `${collectionCdn}/alara-_0011_051A4026.jpg?v=1758026066&width=1200`,
+    products: oneProduct("alara"),
+  },
+  {
+    handle: "amelia",
+    title: "Amelia",
+    description:
+      "Refined threadwork, contrasting appliqué and hand-embellished pearls on Khadi Net, organza and Korean raw silk.",
+    image: `${collectionCdn}/ConvertOut-Resized-051A3440_70385279-c496-44db-83a7-9e7da3bc5baa.jpg?v=1759701227&width=1200`,
+    products: oneProduct("amelia-1"),
+  },
+  {
+    handle: "frontpage",
+    title: "Home Page",
+    description: "The home collection — a curated introduction to Hira Mani Couture.",
+    products: [],
+  },
+  {
+    handle: "inzar",
+    title: "Inzar",
+    description:
+      "Handcrafted silver embroidery, appliqué florals and dabka work on Khadi Net, paired with Korean raw silk and organza.",
+    image: `${collectionCdn}/inzar-_0011_051A4313.jpg?v=1758025602&width=1200`,
+    products: oneProduct("inzar"),
+  },
+  {
+    handle: "izel",
+    title: "Izel",
+    description:
+      "Multicoloured floral threadwork with tilla, zardozi and crystal detailing on a pristine white Khaddi Net base.",
+    image: `${collectionCdn}/ConvertOut-Resized-051A4523.jpg?v=1759702426&width=1200`,
+    products: oneProduct("izel"),
+  },
+  {
+    handle: "kiara",
+    title: "Kiara",
+    description:
+      "Heavy thread embroidery, golden katori and contrasting appliqué on Khadi Net — modern elegance with a festive spirit.",
+    image: `${collectionCdn}/ConvertOut-Resized-051A4729.jpg?v=1759701710&width=1200`,
+    products: oneProduct("kiara"),
+  },
   {
     handle: "nau-bahar",
     title: "Nau Bahar",
     description: "Festive lawn, handcrafted for you. Pre-orders live.",
+    image: `${collectionCdn}/Web_1_optimized.jpg?v=1784236929&width=1200`,
     products: sortByHandles(products, nauBaharOrder),
   },
   {
-    handle: "afsanay-2025",
-    title: "Afsanay 2025",
-    description: "The Hira Mani Bridal Wear collection — a promise for your most important day.",
-    products: sortByHandles(products, afsanayOrder),
+    handle: "new-arrivals",
+    title: "New Arrivals",
+    description: "The latest arrivals from the atelier — new silhouettes, fresh from the Nau Bahar collection.",
+    image: `${collectionCdn}/Closeup1_aaaf7bc3-f496-4396-99d5-cdc88b083ade.jpg?v=1777061711&width=1200`,
+    products: sortByHandles(products, newArrivalsOrder),
+  },
+  {
+    handle: "raha",
+    title: "Raha",
+    description:
+      "Thread embroidery, golden katori and tilla on Khadi Net, with a heavily embellished organza dupatta.",
+    image: `${collectionCdn}/ConvertOut-Resized-051A4947.jpg?v=1759700162&width=1200`,
+    products: oneProduct("raha"),
+  },
+  {
+    handle: "sohaye",
+    title: "Sohaye",
+    description:
+      "The bridal centrepiece: light gold zari, sequins and hand-embellished dabka on the finest Khadi Net.",
+    image: `${collectionCdn}/RR_0005_051A3837.jpg?v=1752766952&width=1200`,
+    products: oneProduct("sohaye"),
   },
   {
     handle: "all",
-    title: "All collections",
+    title: "All Pieces",
     description: "Every piece from Hira Mani Couture, in one place.",
     products: products,
   },

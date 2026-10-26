@@ -6,7 +6,7 @@ import { TrackOrderForm } from "@/components/boty/track-order-form"
 import { site } from "@/lib/data/site"
 
 export const metadata = {
-  title: "Track Your Order | Hira Mani Couture",
+  title: "Track Your Order",
   description: "Track your Hira Mani Couture order with the studio on WhatsApp.",
 }
 

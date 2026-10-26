@@ -4,10 +4,12 @@ import { site } from "@/lib/data/site"
 
 const shopLinks = [
   ["Home", "/"],
+  ["All Collections", "/collections"],
   ["Nau Bahar", "/collections/nau-bahar"],
   ["Afsanay 2025", "/collections/afsanay-2025"],
   ["About", "/pages/about-hiramani"],
   ["Contact Us", "/pages/contact"],
+  ["News", "/blogs/news"],
 ]
 
 const informationLinks = [

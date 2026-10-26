@@ -1,12 +1,16 @@
 import { notFound } from "next/navigation"
 import ShopPage from "@/app/shop/page"
-import { getCollection } from "@/lib/shopify"
+import { collections, getCollection } from "@/lib/shopify"
+
+export function generateStaticParams() {
+  return collections.map((collection) => ({ handle: collection.handle }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ handle: string }> }) {
   const { handle } = await params
   const collection = getCollection(handle)
   return {
-    title: collection ? `${collection.title} | Hira Mani Couture` : "Collection | Hira Mani Couture",
+    title: collection?.title ?? "Collection",
     description: collection?.description ?? "Explore Hira Mani Couture collections.",
   }
 }

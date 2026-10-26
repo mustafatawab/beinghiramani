@@ -5,7 +5,7 @@ import { ContactForm } from "@/components/boty/contact-form"
 import { contact } from "@/lib/data/site"
 
 export const metadata = {
-  title: "Contact | Hira Mani Couture",
+  title: "Contact",
   description:
     "Have a question or comment? Contact Hira Mani Couture on Instagram, Facebook, WhatsApp or by email.",
 }

@@ -2,7 +2,7 @@ import { PolicyPage } from "@/components/boty/policy-page"
 import { shippingPolicy } from "@/lib/data/site"
 
 export const metadata = {
-  title: "Shipping Policy | Hira Mani Couture",
+  title: "Shipping Policy",
   description: "Delivery times, risk and order tracking for Hira Mani Couture orders.",
 }
 

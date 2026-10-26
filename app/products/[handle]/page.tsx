@@ -2,13 +2,17 @@ import { notFound } from "next/navigation"
 import { Header } from "@/components/boty/header"
 import { Footer } from "@/components/boty/footer"
 import { ProductDetail } from "@/components/boty/product-detail"
-import { getCollectionProducts, getProduct } from "@/lib/shopify"
+import { getCollectionProducts, getProduct, products } from "@/lib/shopify"
+
+export function generateStaticParams() {
+  return products.map((product) => ({ handle: product.handle }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ handle: string }> }) {
   const { handle } = await params
   const product = getProduct(handle)
   return {
-    title: product ? `${product.title} | Hira Mani Couture` : "Product not found | Hira Mani Couture",
+    title: product ? product.title : "Product not found",
     description: product?.summary ?? "Hira Mani Couture",
     openGraph: product
       ? {
