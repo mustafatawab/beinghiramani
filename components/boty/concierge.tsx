@@ -349,7 +349,7 @@ export function Concierge({ open, onClose }: { open: boolean; onClose: () => voi
                       {results.map((result) => (
                         <Link
                           key={result.handle}
-                          href={`/products/${result.handle}`}
+                          href={`/product/${result.handle}`}
                           className="flex items-center gap-3 rounded-xl border border-border/70 bg-card/60 p-2.5 transition hover:border-foreground/30"
                         >
                           {result.image && (

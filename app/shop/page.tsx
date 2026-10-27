@@ -1,29 +1,79 @@
-import Link from "next/link"
-import { Header } from "@/components/boty/header"
-import { Footer } from "@/components/boty/footer"
-import { ProductCard } from "@/components/boty/product-card"
-import { getCollection, getCollectionProducts, products } from "@/lib/shopify"
+import Link from "next/link";
+import { Header } from "@/components/boty/header";
+import { Footer } from "@/components/boty/footer";
+import { ProductCard } from "@/components/boty/product-card";
+import { getCollection, getCollectionProducts, products } from "@/lib/shopify";
+import {
+  getCleanProducts,
+  getCollectionByHandle,
+} from "@/features/products/services/shopify-products";
+import type { Product } from "@/lib/data/products";
 
 export const metadata = {
   title: "Shop",
-  description: "Explore the Nau Bahar and Afsanay 2025 collections by Hira Mani Couture.",
-}
+  description:
+    "Explore the Nau Bahar and Afsanay 2025 collections by Hira Mani Couture.",
+};
 
-export default function ShopPage({ collectionHandle }: { collectionHandle?: string }) {
-  const collection = collectionHandle ? getCollection(collectionHandle) : undefined
-  const list = collectionHandle ? getCollectionProducts(collectionHandle) : products
-  const title = collection?.title ?? "Shop Hira's Favorites"
-  const description =
-    collection?.description ?? "Every piece from Hira Mani Couture, handcrafted and carefully curated."
+export default async function ShopPage({
+  collectionHandle,
+}: {
+  collectionHandle?: string;
+}) {
+  let list: Product[] = [];
+  let title = "Shop Hira's Favorites";
+  let description =
+    "Every piece from Hira Mani Couture, handcrafted and carefully curated.";
+
+  // 3. Conditionally fetch live data depending on whether a handle is passed
+  if (collectionHandle && collectionHandle !== "all") {
+    const collectionData = await getCollectionByHandle(collectionHandle, 50);
+    if (collectionData) {
+      title = collectionData.title;
+      description = collectionData.description;
+      list = collectionData.products;
+    }
+  } else {
+    // If handle is "all" or missing, pull all items directly from your catalog
+    list = await getCleanProducts(50);
+  }
 
   const isFlagshipCollection =
-    !collectionHandle || ["all", "nau-bahar", "afsanay-2025"].includes(collectionHandle)
+    !collectionHandle ||
+    ["all", "nau-bahar", "afsanay-2025"].includes(collectionHandle);
 
   const tabs = [
-    { label: "All", href: "/collections/all", active: collectionHandle === "all" || !collectionHandle },
-    { label: "Nau Bahar", href: "/collections/nau-bahar", active: collectionHandle === "nau-bahar" },
-    { label: "Afsanay 2025", href: "/collections/afsanay-2025", active: collectionHandle === "afsanay-2025" },
-  ]
+    {
+      label: "All",
+      href: "/collections/all",
+      active: collectionHandle === "all" || !collectionHandle,
+    },
+    {
+      label: "Nau Bahar",
+      href: "/collections/nau-bahar",
+      active: collectionHandle === "nau-bahar",
+    },
+    {
+      label: "Afsanay 2025",
+      href: "/collections/afsanay-2025",
+      active: collectionHandle === "afsanay-2025",
+    },
+  ];
+
+  // const collection = collectionHandle ? getCollection(collectionHandle) : undefined
+  // const list = collectionHandle ? getCollectionProducts(collectionHandle) : products
+  // const title = collection?.title ?? "Shop Hira's Favorites"
+  // const description =
+  //   collection?.description ?? "Every piece from Hira Mani Couture, handcrafted and carefully curated."
+
+  // const isFlagshipCollection =
+  //   !collectionHandle || ["all", "nau-bahar", "afsanay-2025"].includes(collectionHandle)
+
+  // const tabs = [
+  //   { label: "All", href: "/collections/all", active: collectionHandle === "all" || !collectionHandle },
+  //   { label: "Nau Bahar", href: "/collections/nau-bahar", active: collectionHandle === "nau-bahar" },
+  //   { label: "Afsanay 2025", href: "/collections/afsanay-2025", active: collectionHandle === "afsanay-2025" },
+  // ]
 
   return (
     <main className="min-h-screen">
@@ -31,10 +81,17 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
 
       <section className="px-6 pb-20 pt-[150px] lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <nav aria-label="Breadcrumb" className="mb-9 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-            <Link href="/" className="hover:text-foreground">Home</Link>
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-9 text-xs uppercase tracking-[0.16em] text-muted-foreground"
+          >
+            <Link href="/" className="hover:text-foreground">
+              Home
+            </Link>
             <span className="mx-2">/</span>
-            <Link href="/collections" className="hover:text-foreground">Collections</Link>
+            <Link href="/collections" className="hover:text-foreground">
+              Collections
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-foreground">{title}</span>
           </nav>
@@ -42,10 +99,16 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
               <p className="text-[11px] uppercase tracking-[0.3em] text-primary">
-                {collectionHandle && collectionHandle !== "all" ? "Collection" : "The collection"}
+                {collectionHandle && collectionHandle !== "all"
+                  ? "Collection"
+                  : "The collection"}
               </p>
-              <h1 className="mt-3 font-serif text-5xl leading-none md:text-6xl">{title}</h1>
-              <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">{description}</p>
+              <h1 className="mt-3 font-serif text-5xl leading-none md:text-6xl">
+                {title}
+              </h1>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
+                {description}
+              </p>
             </div>
             <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
               {list.length} {list.length === 1 ? "piece" : "pieces"}
@@ -71,10 +134,16 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
             </div>
           ) : (
             <div className="mt-9 flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">
-              <Link href="/collections" className="text-muted-foreground hover:text-foreground">
+              <Link
+                href="/collections"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 ← All collections
               </Link>
-              <Link href="/collections/all" className="text-muted-foreground hover:text-foreground">
+              <Link
+                href="/collections/all"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 View all pieces
               </Link>
             </div>
@@ -91,7 +160,11 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
               }
             >
               {list.map((product, index) => (
-                <ProductCard key={product.id} product={product} priority={index < 4} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  priority={index < 4}
+                />
               ))}
             </div>
           ) : (
@@ -99,7 +172,12 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
               <p className="font-serif text-3xl">Nothing here yet.</p>
               <p className="mt-3 text-sm text-muted-foreground">
                 Explore the{" "}
-                <Link href="/collections/nau-bahar" className="underline underline-offset-4">Nau Bahar</Link>{" "}
+                <Link
+                  href="/collections/nau-bahar"
+                  className="underline underline-offset-4"
+                >
+                  Nau Bahar
+                </Link>{" "}
                 collection instead.
               </p>
             </div>
@@ -109,5 +187,5 @@ export default function ShopPage({ collectionHandle }: { collectionHandle?: stri
 
       <Footer />
     </main>
-  )
+  );
 }

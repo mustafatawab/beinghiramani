@@ -67,7 +67,7 @@ export default function CartPage() {
               <div className="divide-y divide-border/60 border-y border-border/60">
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-4 py-6 sm:gap-6">
-                    <Link href={`/products/${item.id.split("::")[0]}`} className="w-24 shrink-0 overflow-hidden rounded-xl bg-card sm:w-32">
+                    <Link href={`/product/${item.id.split("::")[0]}`} className="w-24 shrink-0 overflow-hidden rounded-xl bg-card sm:w-32">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={item.image} alt={item.name} className="aspect-[3/4] w-full object-cover" />
                     </Link>
@@ -75,7 +75,7 @@ export default function CartPage() {
                     <div className="flex flex-1 flex-col justify-between gap-4">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <Link href={`/products/${item.id.split("::")[0]}`} className="font-serif text-xl">
+                          <Link href={`/product/${item.id.split("::")[0]}`} className="font-serif text-xl">
                             {item.name}
                           </Link>
                           <p className="mt-1 text-xs leading-5 text-muted-foreground">{item.description}</p>

@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: collection.image ? [collection.image] : undefined,
     })),
     ...products.map((product) => ({
-      url: `https://beinghiramani.com/products/${product.handle}`,
+      url: `https://beinghiramani.com/product/${product.handle}`,
       lastModified: new Date(),
       images: product.images,
     })),

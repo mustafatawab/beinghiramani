@@ -20,7 +20,7 @@ export const NAVIGABLE_PATHS = [
   "/policies/shipping-policy",
   "/policies/terms-of-service",
   ...collections.map((collection) => `/collections/${collection.handle}`),
-  ...products.map((product) => `/products/${product.handle}`),
+  ...products.map((product) => `/product/${product.handle}`),
 ] as const
 
 export const SCROLL_TARGETS = [

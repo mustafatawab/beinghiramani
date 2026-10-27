@@ -1,8 +1,13 @@
 import Link from "next/link"
 import { featuredProducts } from "@/lib/data/products"
 import { ProductCard } from "./product-card"
+import { getCleanProducts } from '@/features/products/services/shopify-products';
 
-export function ProductGrid() {
+export async function ProductGrid() {
+
+   const products = await getCleanProducts(8);
+
+
   return (
     <section id="shop-favorites" className="scroll-mt-20 bg-card py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -32,7 +37,7 @@ export function ProductGrid() {
         </div>
 
         <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {featuredProducts.map((product, index) => (
+          {products.map((product, index) => (
             <ProductCard key={product.id} product={product} priority={index < 2} />
           ))}
         </div>

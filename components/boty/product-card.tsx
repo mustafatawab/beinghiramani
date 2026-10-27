@@ -14,7 +14,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
   return (
     <article className="group">
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-card">
-        <Link href={`/products/${product.handle}`} className="absolute inset-0" aria-label={`View ${product.title}`}>
+        <Link href={`/product/${product.handle}`} className="absolute inset-0" aria-label={`View ${product.title}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={product.images[0]}
@@ -56,7 +56,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
 
       <div className="mt-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <Link href={`/products/${product.handle}`}>
+          <Link href={`/product/${product.handle}`}>
             <h3 className="truncate font-serif text-xl leading-tight">{product.title}</h3>
           </Link>
           <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">

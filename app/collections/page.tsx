@@ -6,6 +6,8 @@ import { Footer } from "@/components/boty/footer"
 import { collections } from "@/lib/data/products"
 import { site } from "@/lib/data/site"
 
+import { getStorefrontCollections } from "@/features/products/services/shopify-products"
+
 export const metadata: Metadata = {
   title: "Collections",
   description:
@@ -20,7 +22,16 @@ export default async function CollectionsPage({
   searchParams: Promise<{ page?: string }>
 }) {
   const { page: pageParam } = await searchParams
-  const list = collections.filter((collection) => collection.handle !== "all")
+
+   // 2. Fetch live data asynchronously directly from Shopify
+  const liveCollections = await getStorefrontCollections() // pull up to 24 products per collection
+
+  // 3. Filter out any helper collections if your mock data did, otherwise filter out "all"
+  const list = liveCollections.filter((collection) => collection.handle !== "all")
+  
+
+
+  // const list = collections.filter((collection) => collection.handle !== "all")
   const totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE))
   const requestedPage = Number.parseInt(pageParam ?? "1", 10)
   const page = Number.isNaN(requestedPage) ? 1 : Math.min(Math.max(requestedPage, 1), totalPages)
