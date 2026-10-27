@@ -216,6 +216,7 @@ const GET_SINGLE_PRODUCT_BY_HANDLE_QUERY = `
       variants(first: 50) {
         edges {
           node {
+            id
             title
             sku
             availableForSale
@@ -238,6 +239,53 @@ const GET_SINGLE_PRODUCT_BY_HANDLE_QUERY = `
     }
   }
 `;
+
+const CREATE_CHECKOUT_MUTATION = `
+  mutation checkoutCreate($input: CheckoutCreateInput!) {
+    checkoutCreate(input: $input) {
+      checkout {
+        webUrl
+      }
+      checkoutUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+
+interface CartItemInput {
+  variantSku?: string;
+  title: string;
+  quantity: number;
+}
+
+
+
+export async function createShopifyCheckout(variantsData: Array<{ variantId: string; quantity: number }>): Promise<string | null> {
+  const lineItems = variantsData.map(item => ({
+    variantId: item.variantId,
+    quantity: item.quantity
+  }));
+
+  try {
+    const data = await shopifyClient<{ checkoutCreate: { checkout: { webUrl: string }; checkoutUserErrors: any[] } }>({
+      query: CREATE_CHECKOUT_MUTATION,
+      variables: { input: { lineItems } }
+    });
+
+    if (data.checkoutCreate?.checkoutUserErrors?.length > 0) {
+      console.error("Checkout validation error:", data.checkoutCreate.checkoutUserErrors);
+      return null;
+    }
+
+    return data.checkoutCreate?.checkout?.webUrl || null;
+  } catch (error) {
+    console.error("Failed creating web checkout token portal:", error);
+    return null;
+  }
+}
 
 
 export async function getProductByHandle(handle: string): Promise<Product | null> {
@@ -300,6 +348,7 @@ export async function getRelatedProducts(collectionHandle: string, currentProduc
 // Look for this section inside transformShopifyProduct within shopify-products.ts
 function transformShopifyProduct(node: any): Product {
   const variants: ProductVariant[] = node.variants.edges.map(({ node: v }: any) => ({
+    id: v.id,
     title: v.title,
     price: parseFloat(v.price.amount),
     compareAtPrice: v.compareAtPrice ? parseFloat(v.compareAtPrice.amount) : null,

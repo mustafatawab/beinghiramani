@@ -1,5 +1,6 @@
 // Product data sourced from beinghiramani.com (Shopify products.json)
 export type ProductVariant = {
+  id?: string,
   title: string
   price: number
   compareAtPrice: number | null
