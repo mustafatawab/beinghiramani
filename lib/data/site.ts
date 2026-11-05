@@ -33,21 +33,6 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { name: "HOME", href: "/" },
-  { name: "NAU BAHAR", href: "/collections/nau-bahar" },
-  {
-    name: "AFSANAY 2025",
-    href: "/collections/afsanay-2025",
-    children: [
-      { name: "Go to AFSANAY 2025", href: "/collections/afsanay-2025" },
-      { name: "Sohaye", href: "/products/sohaye" },
-      { name: "Alara", href: "/products/alara" },
-      { name: "Inzar", href: "/products/inzar" },
-      { name: "Amelia", href: "/products/amelia-1" },
-      { name: "Izel", href: "/products/izel" },
-      { name: "Kiara", href: "/products/kiara" },
-      { name: "Raha", href: "/products/raha" },
-    ],
-  },
   { name: "ABOUT", href: "/pages/about-hiramani" },
   { name: "CONTACT US", href: "/pages/contact" },
 ]
@@ -71,8 +56,8 @@ export const heroSlides: HeroSlide[] = [
     title: "Pankhuri",
     description:
       "Pink chiffon and crushed sharara, traced with gota and chatta patti — a festive study in contrast.",
-    primary: { label: "Shop Pankhuri", href: "/products/punkhari" },
-    secondary: { label: "Explore Nau Bahar", href: "/collections/nau-bahar" },
+    primary: { label: "Shop Raha", href: "/product/raha" },
+    secondary: { label: "Explore the collections", href: "/collections" },
     desktop: `${cdn}/web_close_2_optimized.jpg?v=1777835842&width=2000`,
     mobile: `${cdn}/web_close_2_optimized.jpg?v=1777835842&width=900`,
     desktopPosition: "56% 18%",
@@ -84,7 +69,7 @@ export const heroSlides: HeroSlide[] = [
     title: "Sohaye",
     description:
       "Light gold zari and hand-worked dabka on Khadi Net — a bridal heirloom for your most important day.",
-    primary: { label: "Discover Sohaye", href: "/products/sohaye" },
+    primary: { label: "Shop Sohaye", href: "/product/sohaye" },
     secondary: { label: "View Afsanay 2025", href: "/collections/afsanay-2025" },
     desktop: `${cdn}/RR_0004_051A3916.jpg?v=1752766952&width=1600`,
     mobile: `${cdn}/RR_0004_051A3916.jpg?v=1752766952&width=900`,
@@ -94,11 +79,11 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     eyebrow: "Nau Bahar · Festive lawn",
-    title: "Sunheri",
+    title: "Shabnam",
     description:
-      "An angrakha pishwas in radiant lime, finished with silk borders, lappa laces and handcrafted tassels.",
-    primary: { label: "Shop Sunheri", href: "/products/sunheri" },
-    secondary: { label: "View all pieces", href: "/collections/all" },
+      "A lilac-grey pishwas carrying mirror work, gota laces and a sequin-scattered chiffon dupatta.",
+    primary: { label: "Shop Shabnam", href: "/product/shabnam" },
+    secondary: { label: "Explore Nau Bahar pieces", href: "/shop" },
     desktop: `${cdn}/Web_3_optimized.jpg?v=1784236929&width=2000`,
     mobile: `${cdn}/Web_3_optimized.jpg?v=1784236929&width=900`,
     desktopPosition: "50% 18%",

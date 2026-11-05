@@ -1,16 +1,42 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ChevronDown, Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react"
 import { navLinks, site } from "@/lib/data/site"
 import { CartDrawer } from "./cart-drawer"
 import { useCart } from "./cart-context"
 
+type NavCollection = {
+  handle: string
+  title: string
+  description: string
+  image: string | null
+}
+
 export function Header() {
   const [open, setOpen] = useState(false)
-  const [afsanayOpen, setAfsanayOpen] = useState(false)
+  const [collectionsOpen, setCollectionsOpen] = useState(false)
+  const [collections, setCollections] = useState<NavCollection[]>([])
   const { setIsOpen, itemCount } = useCart()
+
+  // Fetch the current collections from Shopify (falls back to the local
+  // catalogue server-side). Fetched once per full page load.
+  useEffect(() => {
+    let cancelled = false
+    fetch("/api/collections")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.collections)) {
+          setCollections(data.collections)
+        }
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
 
   return (
     <>
@@ -39,61 +65,55 @@ export function Header() {
             </button>
 
             <div className="hidden items-center gap-5 lg:flex xl:gap-7">
-              {navLinks.map((link) =>
-                link.children ? (
-                  <div
-                    key={link.href}
-                    className="relative"
-                    onMouseEnter={() => setAfsanayOpen(true)}
-                    onMouseLeave={() => setAfsanayOpen(false)}
-                  >
-                    <div className="flex items-center gap-1">
-                      <Link
-                        href={link.href}
-                        className="text-[11px] tracking-[0.12em] text-foreground/70 hover:text-foreground"
-                      >
-                        {link.name}
-                      </Link>
+              {navLinks.map((link, index) => (
+                <div key={link.href} className="contents">
+                  {index === navLinks.length - 2 && (
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setCollectionsOpen(true)}
+                      onMouseLeave={() => setCollectionsOpen(false)}
+                    >
                       <button
                         type="button"
-                        className="p-0.5 text-foreground/60"
-                        aria-label="Show Afsanay 2025 pieces"
-                        aria-expanded={afsanayOpen}
-                        onClick={() => setAfsanayOpen((value) => !value)}
+                        className="flex items-center gap-1 p-0 text-[11px] tracking-[0.12em] text-foreground/70 hover:text-foreground"
+                        aria-expanded={collectionsOpen}
+                        onClick={() => setCollectionsOpen((value) => !value)}
                       >
-                        <ChevronDown className="h-3.5 w-3.5" />
+                        COLLECTIONS
+                        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${collectionsOpen ? "rotate-180" : ""}`} />
                       </button>
+                      {collectionsOpen && (
+                        <div className="absolute left-1/2 top-full w-64 -translate-x-1/2 pt-4">
+                          <ul className="max-h-80 overflow-y-auto rounded-xl border border-border/70 bg-[#f7f4ef] p-2 shadow-xl">
+                            {collections.map((collection) => (
+                              <li key={collection.handle}>
+                                <Link
+                                  href={`/collections/${collection.handle}`}
+                                  onClick={() => setCollectionsOpen(false)}
+                                  className="block rounded-lg px-3 py-2 text-xs text-foreground/75 hover:bg-card hover:text-foreground"
+                                >
+                                  {collection.title}
+                                </Link>
+                              </li>
+                            ))}
+                            {collections.length === 0 && (
+                              <li className="px-3 py-2 text-xs text-muted-foreground">
+                                Loading collections…
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
                     </div>
-                    {afsanayOpen && (
-                      <div className="absolute left-1/2 top-full w-56 -translate-x-1/2 pt-4">
-                        <ul className="rounded-xl border border-border/70 bg-[#f7f4ef] p-2 shadow-xl">
-                          {link.children.map((child, index) => (
-                            <li key={child.href}>
-                              <Link
-                                href={child.href}
-                                onClick={() => setAfsanayOpen(false)}
-                                className={`block rounded-lg px-3 py-2 text-xs text-foreground/75 hover:bg-card hover:text-foreground ${
-                                  index === 0 ? "mb-1 border-b border-border/60 pb-3 uppercase tracking-[0.12em]" : ""
-                                }`}
-                              >
-                                {child.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                ) : (
+                  )}
                   <Link
-                    key={link.href}
                     href={link.href}
                     className="text-[11px] tracking-[0.12em] text-foreground/70 hover:text-foreground"
                   >
                     {link.name}
                   </Link>
-                ),
-              )}
+                </div>
+              ))}
             </div>
 
             <Link href="/" className="absolute left-1/2 -translate-x-1/2" aria-label="Hira Mani Couture home">
@@ -129,7 +149,7 @@ export function Header() {
           {open && (
             <div className="max-h-[70vh] overflow-y-auto border-t border-border/50 py-5 lg:hidden">
               <div className="flex flex-col gap-4">
-                {navLinks.map((link) => (
+                {navLinks.map((link, index) => (
                   <div key={link.href}>
                     <Link
                       href={link.href}
@@ -138,19 +158,25 @@ export function Header() {
                     >
                       {link.name}
                     </Link>
-                    {link.children && (
-                      <div className="mt-3 flex flex-col gap-2 border-l border-border/70 pl-4">
-                        {link.children.slice(1).map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            onClick={() => setOpen(false)}
-                            className="text-sm text-muted-foreground"
-                          >
-                            {child.name}
-                          </Link>
-                        ))}
-                      </div>
+                    {index === navLinks.length - 2 && (
+                      <details className="group mt-3">
+                        <summary className="flex cursor-pointer items-center gap-1 text-sm text-muted-foreground">
+                          <ChevronDown className="h-3.5 w-3.5" />
+                          Collections
+                        </summary>
+                        <div className="mt-2 flex flex-col gap-2 border-l border-border/70 pl-4">
+                          {collections.map((collection) => (
+                            <Link
+                              key={collection.handle}
+                              href={`/collections/${collection.handle}`}
+                              onClick={() => setOpen(false)}
+                              className="text-sm text-muted-foreground"
+                            >
+                              {collection.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </details>
                     )}
                   </div>
                 ))}

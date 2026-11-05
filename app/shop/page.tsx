@@ -2,11 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/boty/header";
 import { Footer } from "@/components/boty/footer";
 import { ProductCard } from "@/components/boty/product-card";
-import { getCollection, getCollectionProducts, products } from "@/lib/shopify";
-import {
-  getCleanProducts,
-  getCollectionByHandle,
-} from "@/features/products/services/shopify-products";
+import { getCleanProducts, getCollectionByHandle } from "@/features/products/services/shopify-products";
 import type { Product } from "@/lib/data/products";
 
 export const metadata = {
@@ -38,42 +34,7 @@ export default async function ShopPage({
     list = await getCleanProducts(50);
   }
 
-  const isFlagshipCollection =
-    !collectionHandle ||
-    ["all", "nau-bahar", "afsanay-2025"].includes(collectionHandle);
-
-  const tabs = [
-    {
-      label: "All",
-      href: "/collections/all",
-      active: collectionHandle === "all" || !collectionHandle,
-    },
-    {
-      label: "Nau Bahar",
-      href: "/collections/nau-bahar",
-      active: collectionHandle === "nau-bahar",
-    },
-    {
-      label: "Afsanay 2025",
-      href: "/collections/afsanay-2025",
-      active: collectionHandle === "afsanay-2025",
-    },
-  ];
-
-  // const collection = collectionHandle ? getCollection(collectionHandle) : undefined
-  // const list = collectionHandle ? getCollectionProducts(collectionHandle) : products
-  // const title = collection?.title ?? "Shop Hira's Favorites"
-  // const description =
-  //   collection?.description ?? "Every piece from Hira Mani Couture, handcrafted and carefully curated."
-
-  // const isFlagshipCollection =
-  //   !collectionHandle || ["all", "nau-bahar", "afsanay-2025"].includes(collectionHandle)
-
-  // const tabs = [
-  //   { label: "All", href: "/collections/all", active: collectionHandle === "all" || !collectionHandle },
-  //   { label: "Nau Bahar", href: "/collections/nau-bahar", active: collectionHandle === "nau-bahar" },
-  //   { label: "Afsanay 2025", href: "/collections/afsanay-2025", active: collectionHandle === "afsanay-2025" },
-  // ]
+  const isCollectionPage = Boolean(collectionHandle && collectionHandle !== "all");
 
   return (
     <main className="min-h-screen">
@@ -115,24 +76,7 @@ export default async function ShopPage({
             </p>
           </div>
 
-          {isFlagshipCollection ? (
-            <div className="mt-9 flex flex-wrap gap-6 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">
-              {tabs.map((tab) => (
-                <Link
-                  key={tab.href}
-                  href={tab.href}
-                  aria-current={tab.active ? "page" : undefined}
-                  className={
-                    tab.active
-                      ? "border-b-2 border-foreground pb-4"
-                      : "pb-4 text-muted-foreground hover:text-foreground"
-                  }
-                >
-                  {tab.label}
-                </Link>
-              ))}
-            </div>
-          ) : (
+          {isCollectionPage && (
             <div className="mt-9 flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4 text-xs uppercase tracking-[0.14em]">
               <Link
                 href="/collections"
@@ -171,14 +115,11 @@ export default async function ShopPage({
             <div className="py-24 text-center">
               <p className="font-serif text-3xl">Nothing here yet.</p>
               <p className="mt-3 text-sm text-muted-foreground">
-                Explore the{" "}
-                <Link
-                  href="/collections/nau-bahar"
-                  className="underline underline-offset-4"
-                >
-                  Nau Bahar
+                Explore{" "}
+                <Link href="/collections" className="underline underline-offset-4">
+                  another collection
                 </Link>{" "}
-                collection instead.
+                instead.
               </p>
             </div>
           )}
